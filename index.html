@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pro Clubs Championship</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080b12;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(8, 11, 18, 0.88);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: auto;
+            height: 72px;
+            padding: 0 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #5b8cff;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #b7bdca;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .nav-button {
+            background: #5b8cff;
+            color: white;
+            padding: 10px 17px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-button:hover {
+            background: #4778e8;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 760px;
+            padding: 170px 25px 100px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: #315ed8;
+            filter: blur(180px);
+            opacity: 0.15;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 14px;
+            border: 1px solid rgba(91, 140, 255, 0.35);
+            background: rgba(91, 140, 255, 0.08);
+            border-radius: 50px;
+            color: #8eafff;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 7vw, 78px);
+            line-height: 1.05;
+            letter-spacing: -3px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #5b8cff;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: auto;
+            color: #aab1bf;
+            font-size: 18px;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary-button,
+        .secondary-button {
+            padding: 14px 23px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .primary-button {
+            background: #5b8cff;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background: #4778e8;
+            transform: translateY(-2px);
+        }
+
+        .secondary-button {
+            border: 1px solid #252c3a;
+            color: white;
+            background: #10151f;
+        }
+
+        .secondary-button:hover {
+            background: #171d29;
+        }
+
+        /* =========================
+           SEÇÕES
+        ========================= */
+
+        section {
+            padding: 100px 25px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #8f97a7;
+        }
+
+        /* =========================
+           RECURSOS
+        ========================= */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            background: #0e131c;
+            border: 1px solid #1c2330;
+            border-radius: 14px;
+            padding: 28px;
+            transition: 0.25s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            border-color: #304a85;
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: rgba(91, 140, 255, 0.12);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #8f97a7;
+            font-size: 14px;
+        }
+
+        /* =========================
+           COMO FUNCIONA
+        ========================= */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .number {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+            background: #5b8cff;
+            font-weight: bold;
+        }
+
+        .step p {
+            color: #8f97a7;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* =========================
+           PLANOS
+        ========================= */
+
+        #planos {
+            background: #0b0f17;
+        }
+
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .plan {
+            background: #10151f;
+            border: 1px solid #202938;
+            border-radius: 15px;
+            padding: 28px 22px;
+            text-align: center;
+            transition: 0.25s;
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+            border-color: #4167bd;
+        }
+
+        .plan.featured {
+            border-color: #5b8cff;
+            position: relative;
+        }
+
+        .popular {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            background: #5b8cff;
+            padding: 5px 13px;
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .plan h3 {
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .price small {
+            font-size: 13px;
+            color: #7e8798;
+            font-weight: normal;
+        }
+
+        .plan p {
+            color: #8f97a7;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .buy-button {
+            display: block;
+            padding: 11px;
+            background: #192131;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .featured .buy-button {
+            background: #5b8cff;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            text-align: center;
+            padding: 110px 25px;
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #8f97a7;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            border-top: 1px solid #1b222e;
+            padding: 30px 25px;
+            color: #717a8a;
+            font-size: 13px;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            nav {
+                display: none;
+            }
+
+            .features,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .plans {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .plans {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         MENU
+    ========================== -->
+
+    <header>
+        <div class="navbar">
+
+            <div class="logo">
+                Pro Clubs <span>Championship</span>
+            </div>
+
+            <nav>
+                <a href="#recursos">Recursos</a>
+                <a href="#funcionamento">Como funciona</a>
+                <a href="#planos">Planos</a>
+            </nav>
+
+            <a href="#planos" class="nav-button">
+                Ver planos
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    ⚽ Sistema de campeonatos para Pro Clubs
+                </div>
+
+                <h1>
+                    Seu campeonato.<br>
+                    <span>Seu controle.</span>
+                </h1>
+
+                <p>
+                    Organize torneios de Pro Clubs diretamente no Discord.
+                    Gerencie equipes, partidas, classificação e estatísticas
+                    em um único sistema.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#planos" class="primary-button">
+                        Começar agora
+                    </a>
+
+                    <a href="#recursos" class="secondary-button">
+                        Conhecer o sistema
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RECURSOS
+        ========================== -->
+
+        <section id="recursos">
+
+            <div class="container">
+
+                <div class="section-title">
+
+                    <h2>
+                        Tudo para o seu campeonato
+                    </h2>
+
+                    <p>
+                        Um sistema desenvolvido para facilitar a organização
+                        do Pro Clubs no Discord.
+                    </p>
+
+                </div>
+
+
+                <div class="features">
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🏆
+                        </div>
+
+                        <h3>
+                            Campeonatos
+                        </h3>
+
+                        <p>
+                            Crie e gerencie campeonatos completos
+                            diretamente pelo Discord.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            ⚽
+                        </div>
+
+                        <h3>
+                            Equipes
+                        </h3>
+
+                        <p>
+                            Organize equipes, capitães e jogadores
+                            de forma simples.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            📊
+                        </div>
+
+                        <h3>
+                            Estatísticas
+                        </h3>
+
+                        <p>
+                            Registre gols, assistências e acompanhe
+                            os principais jogadores.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            📋
+                        </div>
+
+                        <h3>
+                            Classificação
+                        </h3>
+
+                        <p>
+                            Acompanhe automaticamente a situação
+                            das equipes durante o campeonato.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🎮
+                        </div>
+
+                        <h3>
+                            Discord
+                        </h3>
+
+                        <p>
+                            Todo o gerenciamento acontece dentro
+                            do seu próprio servidor.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🔑
+                        </div>
+
+                        <h3>
+                            Licenciamento
+                        </h3>
+
+                        <p>
+                            Sistema de licenças para controlar
+                            o acesso ao bot.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             COMO FUNCIONA
+        ========================== -->
+
+        <section id="funcionamento">
+
+            <div class="container">
+
+                <div class="section-title">
+
+                    <h2>
+                        Comece em poucos passos
+                    </h2>
+
+                    <p>
+                        Configure seu campeonato e comece a organizar
+                        suas partidas.
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="number">
+                            1
+                        </div>
+
+                        <h3>
+                            Escolha sua licença
+                        </h3>
+
+                        <p>
+                            Escolha o período que melhor atende
+                            ao seu campeonato.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="number">
+                            2
+                        </div>
+
+                        <h3>
+                            Adicione o bot
+                        </h3>
+
+                        <p>
+                            Adicione o sistema ao seu servidor
+                            do Discord.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="number">
+                            3
+                        </div>
+
+                        <h3>
+                            Organize o campeonato
+                        </h3>
+
+                        <p>
+                            Crie equipes, partidas e acompanhe
+                            o campeonato pelo Discord.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PLANOS
+        ========================== -->
+
+        <section id="planos">
+
+            <div class="container">
+
+                <div class="section-title">
+
+                    <h2>
+                        Escolha sua licença
+                    </h2>
+
+                    <p>
+                        Tenha acesso ao sistema de gerenciamento
+                        de campeonatos para Pro Clubs.
+                    </p>
+
+                </div>
+
+
+                <div class="plans">
+
+
+                    <div class="plan">
+
+                        <h3>
+                            1 Mês
+                        </h3>
+
+                        <div class="price">
+                            R$ 19,90
+                            <small>/mês</small>
+                        </div>
+
+                        <p>
+                            Acesso ao sistema durante 30 dias.
+                        </p>
+
+                        <a href="#" class="buy-button">
+                            Comprar
+                        </a>
+
+                    </div>
+
+
+                    <div class="plan">
+
+                        <h3>
+                            2 Meses
+                        </h3>
+
+                        <div class="price">
+                            R$ 34,90
+                            <small>/2 meses</small>
+                        </div>
+
+                        <p>
+                            Acesso ao sistema durante 60 dias.
+                        </p>
+
+                        <a href="#" class="buy-button">
+                            Comprar
+                        </a>
+
+                    </div>
+
+
+                    <div class="plan featured">
+
+                        <div class="popular">
+                            MAIS POPULAR
+                        </div>
+
+                        <h3>
+                            3 Meses
+                        </h3>
+
+                        <div class="price">
+                            R$ 44,90
+                            <small>/3 meses</small>
+                        </div>
+
+                        <p>
+                            Acesso ao sistema durante 90 dias.
+                        </p>
+
+                        <a href="#" class="buy-button">
+                            Comprar
+                        </a>
+
+                    </div>
+
+
+                    <div class="plan">
+
+                        <h3>
+                            Vitalícia
+                        </h3>
+
+                        <div class="price">
+                            R$ 99,90
+                            <small>/único</small>
+                        </div>
+
+                        <p>
+                            Acesso permanente ao sistema.
+                        </p>
+
+                        <a href="#" class="buy-button">
+                            Comprar
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CTA
+        ========================== -->
+
+        <section class="cta">
+
+            <div class="container">
+
+                <h2>
+                    Pronto para organizar seu campeonato?
+                </h2>
+
+                <p>
+                    Leve seu campeonato de Pro Clubs para outro nível.
+                </p>
+
+                <a href="#planos" class="primary-button">
+                    Ver licenças
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <span>
+                © 2026 Pro Clubs Championship
+            </span>
+
+            <span>
+                Sistema de gerenciamento para Pro Clubs
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        // Pequena animação ao clicar nos botões de compra
+
+        const botoesCompra =
+            document.querySelectorAll(".buy-button");
+
+        botoesCompra.forEach(function(botao) {
+
+            botao.addEventListener("click", function(event) {
+
+                if (botao.getAttribute("href") === "#") {
+
+                    event.preventDefault();
+
+                    alert(
+                        "O sistema de pagamento será configurado em breve."
+                    );
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
