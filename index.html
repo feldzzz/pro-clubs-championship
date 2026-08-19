@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pro Clubs Championship</title>
+    <meta name="description"
+        content="Pro Clubs Championship — sistema completo para organizar campeonatos de Pro Clubs diretamente no Discord.">
+
+    <meta name="theme-color" content="#080b12">
+
+    <title>Pro Clubs Championship | Gestão de Campeonatos</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -15,6 +22,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 90px;
         }
 
         body {
@@ -22,6 +30,35 @@
             background: #080b12;
             color: #ffffff;
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        :root {
+            --blue: #5b8cff;
+            --blue-hover: #4778e8;
+            --blue-light: #8eafff;
+
+            --background: #080b12;
+            --background-2: #0b0f17;
+
+            --card: #10151f;
+            --card-2: #0e131c;
+
+            --border: #202938;
+            --border-light: rgba(255,255,255,0.08);
+
+            --text: #ffffff;
+            --text-muted: #8f97a7;
+            --text-light: #b7bdca;
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 50px));
+            margin: auto;
         }
 
         /* =========================
@@ -31,43 +68,56 @@
         header {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
+
             z-index: 1000;
-            background: rgba(8, 11, 18, 0.88);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            background: rgba(8,11,18,0.88);
+            backdrop-filter: blur(14px);
+
+            border-bottom: 1px solid var(--border-light);
         }
 
         .navbar {
             max-width: 1200px;
-            margin: auto;
             height: 72px;
+
             padding: 0 25px;
+            margin: auto;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            gap: 20px;
         }
 
         .logo {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 800;
+
             letter-spacing: -0.5px;
+
+            white-space: nowrap;
         }
 
         .logo span {
-            color: #5b8cff;
+            color: var(--blue);
         }
 
         nav {
             display: flex;
-            gap: 30px;
+            gap: 28px;
         }
 
         nav a {
-            color: #b7bdca;
+            color: var(--text-light);
+
             text-decoration: none;
+
             font-size: 14px;
+
             transition: 0.2s;
         }
 
@@ -75,20 +125,117 @@
             color: #ffffff;
         }
 
-        .nav-button {
-            background: #5b8cff;
-            color: white;
+        /* BOTÕES DO HEADER */
+
+        .navbar-buttons {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .nav-add-button {
             padding: 10px 17px;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+        }
+
+        .nav-button {
+            background: var(--blue);
+
+            color: white;
+
+            padding: 10px 17px;
+
             border-radius: 8px;
+
             text-decoration: none;
+
             font-size: 14px;
             font-weight: bold;
-            transition: 0.2s;
+
+            white-space: nowrap;
+
+            transition: 0.2s ease;
         }
 
         .nav-button:hover {
-            background: #4778e8;
+            background: var(--blue-hover);
+
             transform: translateY(-1px);
+        }
+
+        /* IDIOMAS */
+
+        .language-select {
+            background: #10151f;
+
+            color: white;
+
+            border: 1px solid #252c3a;
+
+            border-radius: 8px;
+
+            padding: 9px 10px;
+
+            font-size: 13px;
+
+            cursor: pointer;
+
+            outline: none;
+        }
+
+        .language-select:hover {
+            border-color: #3a4b6c;
+        }
+
+        /* =========================
+           BOTÕES GERAIS
+        ========================= */
+
+        .primary-button,
+        .secondary-button,
+        .buy-button {
+            transition: 0.2s ease;
+        }
+
+        .primary-button,
+        .secondary-button {
+            padding: 14px 23px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .primary-button {
+            background: var(--blue);
+
+            color: white;
+        }
+
+        .primary-button:hover {
+            background: var(--blue-hover);
+
+            transform: translateY(-2px);
+        }
+
+        .secondary-button {
+            border: 1px solid #252c3a;
+
+            color: white;
+
+            background: #10151f;
+        }
+
+        .secondary-button:hover {
+            background: #171d29;
+
+            transform: translateY(-2px);
         }
 
         /* =========================
@@ -97,62 +244,116 @@
 
         .hero {
             min-height: 760px;
+
             padding: 170px 25px 100px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
             position: relative;
+
             overflow: hidden;
         }
 
         .hero::before {
             content: "";
+
             position: absolute;
-            width: 600px;
-            height: 600px;
+
+            width: 650px;
+            height: 650px;
+
             background: #315ed8;
-            filter: blur(180px);
-            opacity: 0.15;
-            top: 100px;
+
+            filter: blur(190px);
+
+            opacity: 0.16;
+
+            top: 60px;
             left: 50%;
+
             transform: translateX(-50%);
+
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+            height: 350px;
+
+            background: #5b8cff;
+
+            filter: blur(180px);
+
+            opacity: 0.06;
+
+            right: -150px;
+            bottom: -100px;
+
+            pointer-events: none;
         }
 
         .hero-content {
             max-width: 900px;
+
             text-align: center;
+
             position: relative;
+
             z-index: 2;
+
+            animation: fadeUp 0.7s ease both;
         }
 
         .badge {
-            display: inline-block;
-            padding: 7px 14px;
-            border: 1px solid rgba(91, 140, 255, 0.35);
-            background: rgba(91, 140, 255, 0.08);
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 15px;
+
+            border: 1px solid rgba(91,140,255,0.35);
+
+            background: rgba(91,140,255,0.08);
+
             border-radius: 50px;
-            color: #8eafff;
+
+            color: var(--blue-light);
+
             font-size: 13px;
+
             margin-bottom: 25px;
         }
 
         .hero h1 {
             font-size: clamp(45px, 7vw, 78px);
-            line-height: 1.05;
+
+            line-height: 1.04;
+
             letter-spacing: -3px;
+
             margin-bottom: 25px;
         }
 
         .hero h1 span {
-            color: #5b8cff;
+            color: var(--blue);
         }
 
         .hero p {
-            max-width: 680px;
+            max-width: 700px;
+
             margin: auto;
+
             color: #aab1bf;
+
             font-size: 18px;
         }
 
@@ -160,38 +361,20 @@
             margin-top: 35px;
 
             display: flex;
+
             justify-content: center;
+
             gap: 15px;
+
             flex-wrap: wrap;
         }
 
-        .primary-button,
-        .secondary-button {
-            padding: 14px 23px;
-            border-radius: 9px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.2s;
-        }
+        .hero-note {
+            margin-top: 25px;
 
-        .primary-button {
-            background: #5b8cff;
-            color: white;
-        }
+            color: #6f7889;
 
-        .primary-button:hover {
-            background: #4778e8;
-            transform: translateY(-2px);
-        }
-
-        .secondary-button {
-            border: 1px solid #252c3a;
-            color: white;
-            background: #10151f;
-        }
-
-        .secondary-button:hover {
-            background: #171d29;
+            font-size: 12px;
         }
 
         /* =========================
@@ -202,103 +385,243 @@
             padding: 100px 25px;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: auto;
-        }
-
         .section-title {
             text-align: center;
+
             margin-bottom: 55px;
         }
 
         .section-title h2 {
             font-size: 38px;
+
+            line-height: 1.2;
+
             margin-bottom: 12px;
         }
 
         .section-title p {
-            color: #8f97a7;
+            color: var(--text-muted);
+
+            max-width: 650px;
+
+            margin: auto;
         }
 
         /* =========================
            RECURSOS
         ========================= */
 
+        #recursos {
+            background: var(--background);
+        }
+
         .features {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns: repeat(3,1fr);
+
             gap: 20px;
         }
 
         .feature {
-            background: #0e131c;
+            background: var(--card-2);
+
             border: 1px solid #1c2330;
+
             border-radius: 14px;
+
             padding: 28px;
-            transition: 0.25s;
+
+            transition: 0.25s ease;
         }
 
         .feature:hover {
             transform: translateY(-5px);
+
             border-color: #304a85;
         }
 
         .feature-icon {
             width: 45px;
             height: 45px;
+
             border-radius: 10px;
-            background: rgba(91, 140, 255, 0.12);
+
+            background: rgba(91,140,255,0.12);
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
             font-size: 21px;
+
             margin-bottom: 20px;
         }
 
         .feature h3 {
             margin-bottom: 10px;
+
+            font-size: 18px;
         }
 
         .feature p {
-            color: #8f97a7;
+            color: var(--text-muted);
+
             font-size: 14px;
+        }
+
+        /* =========================
+           FORMATO
+        ========================= */
+
+        #formato {
+            background: #0a0e15;
+        }
+
+        .format-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 22px;
+        }
+
+        .format-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 32px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: 0.25s ease;
+        }
+
+        .format-card:hover {
+            transform: translateY(-4px);
+
+            border-color: #304a85;
+        }
+
+        .format-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            background: var(--blue);
+
+            filter: blur(100px);
+
+            opacity: 0.06;
+
+            right: -80px;
+            top: -80px;
+        }
+
+        .format-number {
+            color: var(--blue);
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 10px;
+        }
+
+        .format-card h3 {
+            font-size: 24px;
+
+            margin-bottom: 10px;
+        }
+
+        .format-card p {
+            color: var(--text-muted);
+
+            font-size: 14px;
+        }
+
+        .format-list {
+            list-style: none;
+
+            margin-top: 22px;
+        }
+
+        .format-list li {
+            color: #b7bdca;
+
+            font-size: 14px;
+
+            padding: 7px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .format-list li:last-child {
+            border-bottom: none;
         }
 
         /* =========================
            COMO FUNCIONA
         ========================= */
 
+        #funcionamento {
+            background: var(--background);
+        }
+
         .steps {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns: repeat(3,1fr);
+
             gap: 25px;
         }
 
         .step {
             text-align: center;
+
             padding: 30px;
         }
 
         .number {
             width: 50px;
             height: 50px;
+
             margin: 0 auto 20px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
             border-radius: 50%;
-            background: #5b8cff;
+
+            background: var(--blue);
+
             font-weight: bold;
         }
 
+        .step h3 {
+            font-size: 18px;
+        }
+
         .step p {
-            color: #8f97a7;
+            color: var(--text-muted);
+
             margin-top: 8px;
+
             font-size: 14px;
         }
 
@@ -307,83 +630,311 @@
         ========================= */
 
         #planos {
-            background: #0b0f17;
+            background: var(--background-2);
         }
 
         .plans {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns: repeat(4,1fr);
+
             gap: 18px;
         }
 
         .plan {
-            background: #10151f;
-            border: 1px solid #202938;
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
             border-radius: 15px;
-            padding: 28px 22px;
+
+            padding: 30px 22px;
+
             text-align: center;
-            transition: 0.25s;
+
+            transition: 0.25s ease;
+
+            position: relative;
         }
 
         .plan:hover {
             transform: translateY(-5px);
+
             border-color: #4167bd;
         }
 
         .plan.featured {
-            border-color: #5b8cff;
-            position: relative;
+            border-color: rgba(255,255,255,0.25);
+
+            box-shadow: 0 0 35px rgba(255,255,255,0.06);
         }
 
         .popular {
             position: absolute;
+
             top: -13px;
             left: 50%;
+
             transform: translateX(-50%);
 
-            background: #5b8cff;
+            background: var(--blue);
+
             padding: 5px 13px;
+
             border-radius: 20px;
 
             font-size: 11px;
+
             font-weight: bold;
+
+            white-space: nowrap;
         }
 
         .plan h3 {
             margin-bottom: 12px;
+
+            font-size: 19px;
         }
 
         .price {
             font-size: 32px;
+
             font-weight: 800;
+
             margin-bottom: 10px;
         }
 
         .price small {
             font-size: 13px;
+
             color: #7e8798;
+
             font-weight: normal;
         }
 
         .plan p {
-            color: #8f97a7;
+            color: var(--text-muted);
+
             font-size: 13px;
+
             margin-bottom: 25px;
+
+            min-height: 42px;
+        }
+
+        .plan-features {
+            list-style: none;
+
+            text-align: left;
+
+            margin-bottom: 25px;
+        }
+
+        .plan-features li {
+            color: #aeb5c2;
+
+            font-size: 13px;
+
+            padding: 5px 0;
+        }
+
+        .plan-features li::before {
+            content: "✓";
+
+            color: var(--blue);
+
+            font-weight: bold;
+
+            margin-right: 8px;
         }
 
         .buy-button {
             display: block;
-            padding: 11px;
+
+            padding: 12px;
+
             background: #192131;
+
             border-radius: 8px;
+
             color: white;
+
             text-decoration: none;
+
             font-size: 14px;
+
             font-weight: bold;
         }
 
+        .buy-button:hover {
+            background: #243047;
+
+            transform: translateY(-1px);
+        }
+
         .featured .buy-button {
-            background: #5b8cff;
+            background: var(--blue);
+        }
+
+        .featured .buy-button:hover {
+            background: var(--blue-hover);
+        }
+
+        .plans-note {
+            text-align: center;
+
+            color: #687285;
+
+            font-size: 12px;
+
+            margin-top: 25px;
+        }
+
+        /* =========================
+           FAQ
+        ========================= */
+
+        #faq {
+            background: var(--background);
+        }
+
+        .faq {
+            max-width: 850px;
+
+            margin: auto;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: var(--card-2);
+
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            color: white;
+
+            padding: 20px 22px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            text-align: left;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .faq-question span {
+            color: var(--blue);
+
+            font-size: 20px;
+
+            transition: 0.2s;
+        }
+
+        .faq-answer {
+            max-height: 0;
+
+            overflow: hidden;
+
+            padding: 0 22px;
+
+            color: var(--text-muted);
+
+            font-size: 14px;
+
+            transition: 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+
+            padding: 0 22px 20px;
+        }
+
+        .faq-item.active .faq-question > span:last-child {
+    transform: rotate(45deg);
+
+        }
+
+        /* =========================
+           SUPORTE
+        ========================= */
+
+        .support {
+            background: #0b0f17;
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 55px 35px;
+
+            text-align: center;
+        }
+
+        .support h2 {
+            font-size: 34px;
+
+            margin-bottom: 12px;
+        }
+
+        .support p {
+            color: var(--text-muted);
+
+            max-width: 600px;
+
+            margin: auto auto 28px;
+        }
+
+        .support-button {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            background: #5865f2;
+
+            color: white;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+        .support-button:hover {
+            transform: translateY(-2px);
+
+            filter: brightness(1.08);
         }
 
         /* =========================
@@ -392,16 +943,51 @@
 
         .cta {
             text-align: center;
+
             padding: 110px 25px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 300px;
+
+            background: var(--blue);
+
+            filter: blur(170px);
+
+            opacity: 0.08;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%,-50%);
+        }
+
+        .cta-content {
+            position: relative;
+
+            z-index: 2;
         }
 
         .cta h2 {
             font-size: 42px;
+
+            line-height: 1.2;
+
             margin-bottom: 15px;
         }
 
         .cta p {
-            color: #8f97a7;
+            color: var(--text-muted);
+
             margin-bottom: 30px;
         }
 
@@ -411,25 +997,71 @@
 
         footer {
             border-top: 1px solid #1b222e;
+
             padding: 30px 25px;
+
             color: #717a8a;
+
             font-size: 13px;
         }
 
         .footer-content {
             max-width: 1100px;
+
             margin: auto;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
+            gap: 20px;
+        }
+
+        .footer-brand {
+            color: #9ca5b5;
+
+            font-weight: bold;
+        }
+
+        .footer-brand span {
+            color: var(--blue);
+        }
+
+        /* =========================
+           ANIMAÇÃO
+        ========================= */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+
         }
 
         /* =========================
            RESPONSIVO
         ========================= */
 
-        @media (max-width: 850px) {
+        @media (max-width:1000px) {
+
+            .plans {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+        }
+
+        @media (max-width:850px) {
 
             nav {
                 display: none;
@@ -440,522 +1072,1966 @@
                 grid-template-columns: 1fr;
             }
 
-            .plans {
-                grid-template-columns: repeat(2, 1fr);
+            .format-grid {
+                grid-template-columns: 1fr;
             }
 
             .hero h1 {
                 letter-spacing: -2px;
             }
+
         }
 
-        @media (max-width: 550px) {
+        @media (max-width:600px) {
+
+            .container {
+                width: min(100% - 30px,1100px);
+            }
+
+            section {
+                padding: 75px 15px;
+            }
+
+            .navbar {
+                padding: 0 15px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .navbar-buttons {
+                gap: 5px;
+            }
+
+            .nav-add-button,
+            .nav-button {
+                padding: 8px 9px;
+
+                font-size: 11px;
+            }
+
+            .language-select {
+                padding: 8px 5px;
+
+                font-size: 11px;
+            }
+
+            .hero {
+                min-height: 700px;
+
+                padding: 145px 15px 80px;
+            }
+
+            .hero h1 {
+                font-size: clamp(42px,13vw,60px);
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
 
             .plans {
                 grid-template-columns: 1fr;
             }
 
+            .support {
+                padding: 40px 22px;
+            }
+
+            .support h2 {
+                font-size: 29px;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+
             .footer-content {
                 flex-direction: column;
-                gap: 10px;
+
+                text-align: center;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
 
-    <!-- =========================
-         MENU
-    ========================== -->
+<header>
 
-    <header>
-        <div class="navbar">
+    <div class="navbar">
 
-            <div class="logo">
-                Pro Clubs <span>Championship</span>
-            </div>
+        <div class="logo">
+            Pro Clubs <span>Championship</span>
+        </div>
 
-            <nav>
-                <a href="#recursos">Recursos</a>
-                <a href="#funcionamento">Como funciona</a>
-                <a href="#planos">Planos</a>
-            </nav>
+        <nav>
 
-            <a href="#planos" class="nav-button">
-                Ver planos
+            <a href="#recursos" data-i18n="nav_resources">
+                Recursos
             </a>
 
-        </div>
-    </header>
+            <a href="#formato" data-i18n="nav_format">
+                Formato
+            </a>
 
+            <a href="#funcionamento" data-i18n="nav_how">
+                Como funciona
+            </a>
+
+            <a href="#planos" data-i18n="nav_plans">
+                Planos
+            </a>
+
+            <a href="#faq">
+                FAQ
+            </a>
+
+        </nav>
+
+        <div class="navbar-buttons">
+
+            <!-- ADICIONAR BOT -->
+
+    <a
+        href="https://discord.com/oauth2/authorize?client_id=1389285656617812028&permissions=84992&integration_type=0&scope=bot+applications.commands"
+        class="nav-button"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-i18n="add_bot"
+    >
+    Adicionar Bot
+</a>
+
+<!-- VER PLANOS -->
+
+<a
+    href="#planos"
+    class="nav-button"
+    data-i18n="see_plans"
+>
+    Ver planos
+</a>
+
+            <!-- IDIOMA -->
+
+            <select
+                id="languageSelect"
+                class="language-select"
+                aria-label="Idioma"
+            >
+
+                <option value="pt">
+                    🇧🇷 PT
+                </option>
+
+                <option value="en">
+                    🇺🇸 EN
+                </option>
+
+                <option value="es">
+                    🇪🇸 ES
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
 
     <!-- =========================
          HERO
-    ========================== -->
+    ========================= -->
 
-    <main>
+    <section class="hero">
 
-        <section class="hero">
+        <div class="hero-content">
 
-            <div class="hero-content">
+            <div class="badge" data-i18n="badge">
+                ⚽ Sistema de campeonatos para Pro Clubs
+            </div>
 
-                <div class="badge">
-                    ⚽ Sistema de campeonatos para Pro Clubs
-                </div>
+            <h1>
+                <span data-i18n="hero_title_1">
+                    Organize.
+                </span>
+                <br>
+                <span data-i18n="hero_title_2">
+                    Gerencie. Compita.
+                </span>
+            </h1>
 
-                <h1>
-                    Seu campeonato.<br>
-                    <span>Seu controle.</span>
-                </h1>
+            <p data-i18n="hero_description">
+                Transforme seu servidor do Discord em uma central completa
+                para campeonatos de Pro Clubs. Gerencie equipes, partidas,
+                classificação e estatísticas em um único sistema.
+            </p>
 
-                <p>
-                    Organize torneios de Pro Clubs diretamente no Discord.
-                    Gerencie equipes, partidas, classificação e estatísticas
-                    em um único sistema.
+            <div class="hero-buttons">
+
+                <a
+                    href="#planos"
+                    class="primary-button"
+                    data-i18n="start_now"
+                >
+                    Começar agora
+                </a>
+
+                <a
+                    href="#recursos"
+                    class="secondary-button"
+                    data-i18n="learn_system"
+                >
+                    Conhecer o sistema
+                </a>
+
+            </div>
+
+            <div
+                class="hero-note"
+                data-i18n="hero_note"
+            >
+                Desenvolvido para organização de campeonatos de Pro Clubs.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RECURSOS
+    ========================= -->
+
+    <section id="recursos">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2 data-i18n="features_title">
+                    Tudo para o seu campeonato
+                </h2>
+
+                <p data-i18n="features_description">
+                    Ferramentas para organizar e acompanhar seu campeonato
+                    diretamente dentro do Discord.
                 </p>
 
-                <div class="hero-buttons">
-
-                    <a href="#planos" class="primary-button">
-                        Começar agora
-                    </a>
-
-                    <a href="#recursos" class="secondary-button">
-                        Conhecer o sistema
-                    </a>
-
-                </div>
-
             </div>
 
-        </section>
+            <div class="features">
 
+                <div class="feature">
 
-        <!-- =========================
-             RECURSOS
-        ========================== -->
+                    <div class="feature-icon">
+                        🏆
+                    </div>
 
-        <section id="recursos">
+                    <h3 data-i18n="feature_championship">
+                        Campeonatos
+                    </h3>
 
-            <div class="container">
-
-                <div class="section-title">
-
-                    <h2>
-                        Tudo para o seu campeonato
-                    </h2>
-
-                    <p>
-                        Um sistema desenvolvido para facilitar a organização
-                        do Pro Clubs no Discord.
+                    <p data-i18n="feature_championship_desc">
+                        Crie e gerencie campeonatos completos diretamente
+                        pelo seu servidor do Discord.
                     </p>
 
                 </div>
 
 
-                <div class="features">
+                <div class="feature">
 
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            🏆
-                        </div>
-
-                        <h3>
-                            Campeonatos
-                        </h3>
-
-                        <p>
-                            Crie e gerencie campeonatos completos
-                            diretamente pelo Discord.
-                        </p>
-
+                    <div class="feature-icon">
+                        ⚽
                     </div>
 
+                    <h3 data-i18n="feature_teams">
+                        Equipes
+                    </h3>
 
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            ⚽
-                        </div>
-
-                        <h3>
-                            Equipes
-                        </h3>
-
-                        <p>
-                            Organize equipes, capitães e jogadores
-                            de forma simples.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            📊
-                        </div>
-
-                        <h3>
-                            Estatísticas
-                        </h3>
-
-                        <p>
-                            Registre gols, assistências e acompanhe
-                            os principais jogadores.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            📋
-                        </div>
-
-                        <h3>
-                            Classificação
-                        </h3>
-
-                        <p>
-                            Acompanhe automaticamente a situação
-                            das equipes durante o campeonato.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            🎮
-                        </div>
-
-                        <h3>
-                            Discord
-                        </h3>
-
-                        <p>
-                            Todo o gerenciamento acontece dentro
-                            do seu próprio servidor.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature">
-
-                        <div class="feature-icon">
-                            🔑
-                        </div>
-
-                        <h3>
-                            Licenciamento
-                        </h3>
-
-                        <p>
-                            Sistema de licenças para controlar
-                            o acesso ao bot.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             COMO FUNCIONA
-        ========================== -->
-
-        <section id="funcionamento">
-
-            <div class="container">
-
-                <div class="section-title">
-
-                    <h2>
-                        Comece em poucos passos
-                    </h2>
-
-                    <p>
-                        Configure seu campeonato e comece a organizar
-                        suas partidas.
+                    <p data-i18n="feature_teams_desc">
+                        Organize equipes, capitães e jogadores de maneira
+                        simples e centralizada.
                     </p>
 
                 </div>
 
 
-                <div class="steps">
+                <div class="feature">
 
-                    <div class="step">
-
-                        <div class="number">
-                            1
-                        </div>
-
-                        <h3>
-                            Escolha sua licença
-                        </h3>
-
-                        <p>
-                            Escolha o período que melhor atende
-                            ao seu campeonato.
-                        </p>
-
+                    <div class="feature-icon">
+                        📊
                     </div>
 
+                    <h3 data-i18n="feature_stats">
+                        Estatísticas
+                    </h3>
 
-                    <div class="step">
+                    <p data-i18n="feature_stats_desc">
+                        Registre gols, assistências e acompanhe o desempenho
+                        dos jogadores durante o campeonato.
+                    </p>
 
-                        <div class="number">
-                            2
-                        </div>
+                </div>
 
-                        <h3>
-                            Adicione o bot
-                        </h3>
 
-                        <p>
-                            Adicione o sistema ao seu servidor
-                            do Discord.
-                        </p>
+                <div class="feature">
 
+                    <div class="feature-icon">
+                        📋
                     </div>
 
+                    <h3 data-i18n="feature_table">
+                        Classificação
+                    </h3>
 
-                    <div class="step">
+                    <p data-i18n="feature_table_desc">
+                        Acompanhe automaticamente os resultados e a situação
+                        das equipes na competição.
+                    </p>
 
-                        <div class="number">
-                            3
-                        </div>
+                </div>
 
-                        <h3>
-                            Organize o campeonato
-                        </h3>
 
-                        <p>
-                            Crie equipes, partidas e acompanhe
-                            o campeonato pelo Discord.
-                        </p>
+                <div class="feature">
 
+                    <div class="feature-icon">
+                        🏅
                     </div>
+
+                    <h3 data-i18n="feature_topscorer">
+                        Artilharia
+                    </h3>
+
+                    <p data-i18n="feature_topscorer_desc">
+                        Consulte os jogadores com mais gols e acompanhe
+                        os principais destaques da competição.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🔑
+                    </div>
+
+                    <h3 data-i18n="feature_license">
+                        Sistema de licenças
+                    </h3>
+
+                    <p data-i18n="feature_license_desc">
+                        Controle o acesso ao bot através de um sistema
+                        próprio de licenciamento.
+                    </p>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- =========================
-             PLANOS
-        ========================== -->
+    <!-- =========================
+         FORMATO
+    ========================= -->
 
-        <section id="planos">
+    <section id="formato">
 
-            <div class="container">
+        <div class="container">
 
-                <div class="section-title">
+            <div class="section-title">
 
-                    <h2>
+                <h2 data-i18n="format_title">
+                    Um campeonato de verdade
+                </h2>
+
+                <p data-i18n="format_description">
+                    Estruture sua competição desde a fase inicial até
+                    a disputa pelo título.
+                </p>
+
+            </div>
+
+            <div class="format-grid">
+
+                <div class="format-card">
+
+                    <div
+                        class="format-number"
+                        data-i18n="stage_1"
+                    >
+                        Etapa 01
+                    </div>
+
+                    <h3 data-i18n="groups">
+                        Fase de grupos
+                    </h3>
+
+                    <p data-i18n="groups_desc">
+                        As equipes disputam seus jogos e brigam pelas
+                        melhores posições para avançar na competição.
+                    </p>
+
+                    <ul class="format-list">
+
+                        <li data-i18n="groups_1">
+                            ✓ Organização das equipes
+                        </li>
+
+                        <li data-i18n="groups_2">
+                            ✓ Registro dos resultados
+                        </li>
+
+                        <li data-i18n="groups_3">
+                            ✓ Classificação da competição
+                        </li>
+
+                        <li data-i18n="groups_4">
+                            ✓ Acompanhamento das estatísticas
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="format-card">
+
+                    <div
+                        class="format-number"
+                        data-i18n="stage_2"
+                    >
+                        Etapa 02
+                    </div>
+
+                    <h3 data-i18n="knockout">
+                        Fase eliminatória
+                    </h3>
+
+                    <p data-i18n="knockout_desc">
+                        Depois da classificação, começa o mata-mata.
+                        Cada partida pode definir o futuro da equipe.
+                    </p>
+
+                    <ul class="format-list">
+
+                        <li data-i18n="knockout_1">
+                            ✓ Avanço dos classificados
+                        </li>
+
+                        <li data-i18n="knockout_2">
+                            ✓ Confrontos eliminatórios
+                        </li>
+
+                        <li data-i18n="knockout_3">
+                            ✓ Disputa pelas fases finais
+                        </li>
+
+                        <li data-i18n="knockout_4">
+                            ✓ Grande final
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         COMO FUNCIONA
+    ========================= -->
+
+    <section id="funcionamento">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2 data-i18n="how_title">
+                    Comece em poucos passos
+                </h2>
+
+                <p data-i18n="how_description">
+                    Tenha o sistema no seu servidor e comece a organizar
+                    seu campeonato.
+                </p>
+
+            </div>
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="number">
+                        1
+                    </div>
+
+                    <h3 data-i18n="step1_title">
                         Escolha sua licença
-                    </h2>
+                    </h3>
 
-                    <p>
-                        Tenha acesso ao sistema de gerenciamento
-                        de campeonatos para Pro Clubs.
+                    <p data-i18n="step1_desc">
+                        Escolha o período que melhor atende ao seu
+                        campeonato.
                     </p>
 
                 </div>
 
 
-                <div class="plans">
+                <div class="step">
 
-
-                    <div class="plan">
-
-                        <h3>
-                            1 Mês
-                        </h3>
-
-                        <div class="price">
-                            R$ 19,90
-                            <small>/mês</small>
-                        </div>
-
-                        <p>
-                            Acesso ao sistema durante 30 dias.
-                        </p>
-
-                        <a href="#" class="buy-button">
-                            Comprar
-                        </a>
-
+                    <div class="number">
+                        2
                     </div>
 
+                    <h3 data-i18n="step2_title">
+                        Adicione o bot
+                    </h3>
 
-                    <div class="plan">
+                    <p data-i18n="step2_desc">
+                        Adicione o sistema ao seu servidor do Discord
+                        e ative sua licença.
+                    </p>
 
-                        <h3>
-                            2 Meses
-                        </h3>
+                </div>
 
-                        <div class="price">
-                            R$ 34,90
-                            <small>/2 meses</small>
-                        </div>
 
-                        <p>
-                            Acesso ao sistema durante 60 dias.
-                        </p>
+                <div class="step">
 
-                        <a href="#" class="buy-button">
-                            Comprar
-                        </a>
-
+                    <div class="number">
+                        3
                     </div>
 
+                    <h3 data-i18n="step3_title">
+                        Organize a competição
+                    </h3>
 
-                    <div class="plan featured">
-
-                        <div class="popular">
-                            MAIS POPULAR
-                        </div>
-
-                        <h3>
-                            3 Meses
-                        </h3>
-
-                        <div class="price">
-                            R$ 44,90
-                            <small>/3 meses</small>
-                        </div>
-
-                        <p>
-                            Acesso ao sistema durante 90 dias.
-                        </p>
-
-                        <a href="#" class="buy-button">
-                            Comprar
-                        </a>
-
-                    </div>
-
-
-                    <div class="plan">
-
-                        <h3>
-                            Vitalícia
-                        </h3>
-
-                        <div class="price">
-                            R$ 99,90
-                            <small>/único</small>
-                        </div>
-
-                        <p>
-                            Acesso permanente ao sistema.
-                        </p>
-
-                        <a href="#" class="buy-button">
-                            Comprar
-                        </a>
-
-                    </div>
-
+                    <p data-i18n="step3_desc">
+                        Crie equipes, registre partidas e acompanhe
+                        toda a competição.
+                    </p>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- =========================
-             CTA
-        ========================== -->
+    <!-- =========================
+         PLANOS
+    ========================= -->
 
-        <section class="cta">
+    <section id="planos">
 
-            <div class="container">
+        <div class="container">
 
-                <h2>
+            <div class="section-title">
+
+                <h2 data-i18n="plans_title">
+                    Escolha sua licença
+                </h2>
+
+                <p data-i18n="plans_description">
+                    Escolha o período ideal para o seu campeonato
+                    e tenha acesso ao sistema.
+                </p>
+
+            </div>
+
+
+            <div class="plans">
+
+
+                <!-- 1 MÊS -->
+
+                <div class="plan">
+
+                    <h3 data-i18n="one_month">
+                        1 Mês
+                    </h3>
+
+                    <div class="price">
+                        R$ 39,90
+                        <small data-i18n="month_small">
+                            /mês
+                        </small>
+                    </div>
+
+                    <p data-i18n="one_month_desc">
+                        Acesso ao sistema durante 30 dias.
+                    </p>
+
+                    <ul class="plan-features">
+
+                        <li data-i18n="plan_feature_1">
+                            Gerenciamento de campeonato
+                        </li>
+
+                        <li data-i18n="plan_feature_2">
+                            Equipes e jogadores
+                        </li>
+
+                        <li data-i18n="plan_feature_3">
+                            Partidas e resultados
+                        </li>
+
+                        <li data-i18n="plan_feature_4">
+                            Estatísticas
+                        </li>
+
+                    </ul>
+
+                    <a
+                        href="COLE_AQUI_LINK_MERCADO_PAGO_1_MES"
+                        class="buy-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-i18n="buy"
+                    >
+                        Comprar
+                    </a>
+
+                </div>
+
+
+                <!-- 2 MESES -->
+
+                <div class="plan">
+
+                    <h3 data-i18n="two_months">
+                        2 Meses
+                    </h3>
+
+                    <div class="price">
+                        R$ 69,90
+                        <small data-i18n="two_months_small">
+                            /2 meses
+                        </small>
+                    </div>
+
+                    <p data-i18n="two_months_desc">
+                        Acesso ao sistema durante 60 dias.
+                    </p>
+
+                    <ul class="plan-features">
+
+                        <li data-i18n="plan_feature_1">
+                            Gerenciamento de campeonato
+                        </li>
+
+                        <li data-i18n="plan_feature_2">
+                            Equipes e jogadores
+                        </li>
+
+                        <li data-i18n="plan_feature_3">
+                            Partidas e resultados
+                        </li>
+
+                        <li data-i18n="plan_feature_4">
+                            Estatísticas
+                        </li>
+
+                    </ul>
+
+                    <a
+                        href="COLE_AQUI_LINK_MERCADO_PAGO_2_MESES"
+                        class="buy-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-i18n="buy"
+                    >
+                        Comprar
+                    </a>
+
+                </div>
+
+
+                <!-- 3 MESES -->
+
+                <div class="plan featured">
+
+                    <div
+                        class="popular"
+                        data-i18n="popular"
+                    >
+                        MAIS POPULAR
+                    </div>
+
+                    <h3 data-i18n="three_months">
+                        3 Meses
+                    </h3>
+
+                    <div class="price">
+                        R$ 89,90
+                        <small data-i18n="three_months_small">
+                            /3 meses
+                        </small>
+                    </div>
+
+                    <p data-i18n="three_months_desc">
+                        Acesso ao sistema durante 90 dias.
+                    </p>
+
+                    <ul class="plan-features">
+
+                        <li data-i18n="plan_feature_1">
+                            Gerenciamento de campeonato
+                        </li>
+
+                        <li data-i18n="plan_feature_2">
+                            Equipes e jogadores
+                        </li>
+
+                        <li data-i18n="plan_feature_3">
+                            Partidas e resultados
+                        </li>
+
+                        <li data-i18n="plan_feature_4">
+                            Estatísticas
+                        </li>
+
+                    </ul>
+
+                    <a
+                        href="COLE_AQUI_LINK_MERCADO_PAGO_3_MESES"
+                        class="buy-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-i18n="buy"
+                    >
+                        Comprar
+                    </a>
+
+                </div>
+
+
+                <!-- VITALÍCIA -->
+
+                <div class="plan">
+
+                    <h3 data-i18n="lifetime">
+                        Vitalícia
+                    </h3>
+
+                    <div class="price">
+                        R$ 199,90
+                        <small data-i18n="lifetime_small">
+                            /único
+                        </small>
+                    </div>
+
+                    <p data-i18n="lifetime_desc">
+                        Acesso permanente ao sistema.
+                    </p>
+
+                    <ul class="plan-features">
+
+                        <li data-i18n="plan_feature_1">
+                            Gerenciamento de campeonato
+                        </li>
+
+                        <li data-i18n="plan_feature_2">
+                            Equipes e jogadores
+                        </li>
+
+                        <li data-i18n="plan_feature_3">
+                            Partidas e resultados
+                        </li>
+
+                        <li data-i18n="plan_feature_4">
+                            Estatísticas
+                        </li>
+
+                    </ul>
+
+                    <a
+                        href="COLE_AQUI_LINK_MERCADO_PAGO_VITALICIA"
+                        class="buy-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-i18n="buy"
+                    >
+                        Comprar
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="plans-note"
+                data-i18n="payment_note"
+            >
+                Pagamento realizado com segurança através do Mercado Pago.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FAQ
+    ========================= -->
+
+    <section id="faq">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2 data-i18n="faq_title">
+                    Perguntas frequentes
+                </h2>
+
+                <p data-i18n="faq_description">
+                    Algumas respostas para as principais dúvidas
+                    sobre o sistema.
+                </p>
+
+            </div>
+
+
+            <div class="faq">
+
+                <div class="faq-item">
+
+                    <button class="faq-question">
+
+                        <span data-i18n="faq_q1">
+                            O bot funciona dentro do Discord?
+                        </span>
+
+                        <span>+</span>
+
+                    </button>
+
+                    <div
+                        class="faq-answer"
+                        data-i18n="faq_a1"
+                    >
+                        Sim. O gerenciamento do campeonato é realizado
+                        diretamente pelo bot dentro do seu servidor
+                        do Discord.
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button class="faq-question">
+
+                        <span data-i18n="faq_q2">
+                            O que posso gerenciar?
+                        </span>
+
+                        <span>+</span>
+
+                    </button>
+
+                    <div
+                        class="faq-answer"
+                        data-i18n="faq_a2"
+                    >
+                        Você pode organizar equipes, jogadores, partidas,
+                        resultados, classificação e estatísticas da
+                        competição.
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button class="faq-question">
+
+                        <span data-i18n="faq_q3">
+                            Posso fazer fase de grupos e mata-mata?
+                        </span>
+
+                        <span>+</span>
+
+                    </button>
+
+                    <div
+                        class="faq-answer"
+                        data-i18n="faq_a3"
+                    >
+                        O sistema foi pensado para campeonatos com uma
+                        estrutura competitiva, incluindo fase de grupos
+                        e posteriormente uma fase eliminatória.
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button class="faq-question">
+
+                        <span data-i18n="faq_q4">
+                            Como funciona a licença?
+                        </span>
+
+                        <span>+</span>
+
+                    </button>
+
+                    <div
+                        class="faq-answer"
+                        data-i18n="faq_a4"
+                    >
+                        A licença determina o período de acesso ao sistema.
+                        Depois da compra, ela poderá ser ativada no seu
+                        servidor através do sistema de licenciamento.
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button class="faq-question">
+
+                        <span data-i18n="faq_q5">
+                            Preciso instalar alguma coisa no computador?
+                        </span>
+
+                        <span>+</span>
+
+                    </button>
+
+                    <div
+                        class="faq-answer"
+                        data-i18n="faq_a5"
+                    >
+                        Não. O bot funciona no Discord. Depois de adicionar
+                        o bot ao servidor e ativar sua licença, o sistema
+                        fica disponível para utilização.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SUPORTE
+    ========================= -->
+
+    <section>
+
+        <div class="container">
+
+            <div class="support">
+
+                <h2 data-i18n="support_title">
+                    Precisa de ajuda?
+                </h2>
+
+                <p data-i18n="support_description">
+                    Entre em contato pelo nosso canal de suporte caso
+                    tenha alguma dúvida sobre o sistema, licença ou
+                    funcionamento do bot.
+                </p>
+
+                <a
+                    href="https://discord.com/invite/u3MmM9qMah"
+                    class="support-button"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-i18n="contact"
+                >
+                    Entrar em contato
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CTA
+    ========================= -->
+
+    <section class="cta">
+
+        <div class="container">
+
+            <div class="cta-content">
+
+                <h2 data-i18n="cta_title">
                     Pronto para organizar seu campeonato?
                 </h2>
 
-                <p>
-                    Leve seu campeonato de Pro Clubs para outro nível.
+                <p data-i18n="cta_description">
+                    Leve a organização do seu Pro Clubs para outro nível.
                 </p>
 
-                <a href="#planos" class="primary-button">
+                <a
+                    href="#planos"
+                    class="primary-button"
+                    data-i18n="see_licenses"
+                >
                     Ver licenças
                 </a>
 
             </div>
 
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer>
-
-        <div class="footer-content">
-
-            <span>
-                © 2026 Pro Clubs Championship
-            </span>
-
-            <span>
-                Sistema de gerenciamento para Pro Clubs
-            </span>
-
         </div>
 
-    </footer>
+    </section>
+
+</main>
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+<!-- =========================
+     FOOTER
+========================= -->
 
-    <script>
+<footer>
 
-        // Pequena animação ao clicar nos botões de compra
+    <div class="footer-content">
 
-        const botoesCompra =
-            document.querySelectorAll(".buy-button");
+        <div class="footer-brand">
+            Pro Clubs <span>Championship</span>
+        </div>
 
-        botoesCompra.forEach(function(botao) {
+        <span>
+            © 2026 Pro Clubs Championship
+        </span>
 
-            botao.addEventListener("click", function(event) {
+        <span data-i18n="footer_description">
+            Sistema de gerenciamento para Pro Clubs
+        </span>
 
-                if (botao.getAttribute("href") === "#") {
+    </div>
 
-                    event.preventDefault();
+</footer>
 
-                    alert(
-                        "O sistema de pagamento será configurado em breve."
-                    );
+
+<script>
+
+    /* =========================
+       FAQ
+    ========================= */
+
+    const perguntas =
+        document.querySelectorAll(".faq-question");
+
+    perguntas.forEach(function(pergunta) {
+
+        pergunta.addEventListener("click", function() {
+
+            const item =
+                pergunta.parentElement;
+
+            const todos =
+                document.querySelectorAll(".faq-item");
+
+            todos.forEach(function(outroItem) {
+
+                if (outroItem !== item) {
+
+                    outroItem.classList.remove("active");
 
                 }
 
             });
 
+            item.classList.toggle("active");
+
         });
 
-    </script>
+    });
+
+
+    /* =========================
+       SISTEMA DE IDIOMAS
+    ========================= */
+
+    const translations = {
+
+        pt: {
+
+            nav_resources: "Recursos",
+            nav_format: "Formato",
+            nav_how: "Como funciona",
+            nav_plans: "Planos",
+
+            add_bot: "Adicionar Bot",
+            see_plans: "Ver planos",
+
+            badge: "⚽ Sistema de campeonatos para Pro Clubs",
+
+            hero_title_1: "Organize.",
+            hero_title_2: "Gerencie. Compita.",
+
+            hero_description:
+                "Transforme seu servidor do Discord em uma central completa para campeonatos de Pro Clubs. Gerencie equipes, partidas, classificação e estatísticas em um único sistema.",
+
+            start_now: "Começar agora",
+            learn_system: "Conhecer o sistema",
+
+            hero_note:
+                "Desenvolvido para organização de campeonatos de Pro Clubs.",
+
+            features_title:
+                "Tudo para o seu campeonato",
+
+            features_description:
+                "Ferramentas para organizar e acompanhar seu campeonato diretamente dentro do Discord.",
+
+            feature_championship:
+                "Campeonatos",
+
+            feature_championship_desc:
+                "Crie e gerencie campeonatos completos diretamente pelo seu servidor do Discord.",
+
+            feature_teams:
+                "Equipes",
+
+            feature_teams_desc:
+                "Organize equipes, capitães e jogadores de maneira simples e centralizada.",
+
+            feature_stats:
+                "Estatísticas",
+
+            feature_stats_desc:
+                "Registre gols, assistências e acompanhe o desempenho dos jogadores durante o campeonato.",
+
+            feature_table:
+                "Classificação",
+
+            feature_table_desc:
+                "Acompanhe automaticamente os resultados e a situação das equipes na competição.",
+
+            feature_topscorer:
+                "Artilharia",
+
+            feature_topscorer_desc:
+                "Consulte os jogadores com mais gols e acompanhe os principais destaques da competição.",
+
+            feature_license:
+                "Sistema de licenças",
+
+            feature_license_desc:
+                "Controle o acesso ao bot através de um sistema próprio de licenciamento.",
+
+            format_title:
+                "Um campeonato de verdade",
+
+            format_description:
+                "Estruture sua competição desde a fase inicial até a disputa pelo título.",
+
+            stage_1: "Etapa 01",
+            groups: "Fase de grupos",
+
+            groups_desc:
+                "As equipes disputam seus jogos e brigam pelas melhores posições para avançar na competição.",
+
+            groups_1: "✓ Organização das equipes",
+            groups_2: "✓ Registro dos resultados",
+            groups_3: "✓ Classificação da competição",
+            groups_4: "✓ Acompanhamento das estatísticas",
+
+            stage_2: "Etapa 02",
+            knockout: "Fase eliminatória",
+
+            knockout_desc:
+                "Depois da classificação, começa o mata-mata. Cada partida pode definir o futuro da equipe.",
+
+            knockout_1: "✓ Avanço dos classificados",
+            knockout_2: "✓ Confrontos eliminatórios",
+            knockout_3: "✓ Disputa pelas fases finais",
+            knockout_4: "✓ Grande final",
+
+            how_title:
+                "Comece em poucos passos",
+
+            how_description:
+                "Tenha o sistema no seu servidor e comece a organizar seu campeonato.",
+
+            step1_title:
+                "Escolha sua licença",
+
+            step1_desc:
+                "Escolha o período que melhor atende ao seu campeonato.",
+
+            step2_title:
+                "Adicione o bot",
+
+            step2_desc:
+                "Adicione o sistema ao seu servidor do Discord e ative sua licença.",
+
+            step3_title:
+                "Organize a competição",
+
+            step3_desc:
+                "Crie equipes, registre partidas e acompanhe toda a competição.",
+
+            plans_title:
+                "Escolha sua licença",
+
+            plans_description:
+                "Escolha o período ideal para o seu campeonato e tenha acesso ao sistema.",
+
+            one_month:
+                "1 Mês",
+
+            month_small:
+                "/mês",
+
+            one_month_desc:
+                "Acesso ao sistema durante 30 dias.",
+
+            two_months:
+                "2 Meses",
+
+            two_months_small:
+                "/2 meses",
+
+            two_months_desc:
+                "Acesso ao sistema durante 60 dias.",
+
+            three_months:
+                "3 Meses",
+
+            three_months_small:
+                "/3 meses",
+
+            three_months_desc:
+                "Acesso ao sistema durante 90 dias.",
+
+            lifetime:
+                "Vitalícia",
+
+            lifetime_small:
+                "/único",
+
+            lifetime_desc:
+                "Acesso permanente ao sistema.",
+
+            plan_feature_1:
+                "Gerenciamento de campeonato",
+
+            plan_feature_2:
+                "Equipes e jogadores",
+
+            plan_feature_3:
+                "Partidas e resultados",
+
+            plan_feature_4:
+                "Estatísticas",
+
+            buy:
+                "Comprar",
+
+            popular:
+                "MAIS POPULAR",
+
+            payment_note:
+                "Pagamento realizado com segurança através do Mercado Pago.",
+
+            faq_title:
+                "Perguntas frequentes",
+
+            faq_description:
+                "Algumas respostas para as principais dúvidas sobre o sistema.",
+
+            faq_q1:
+                "O bot funciona dentro do Discord?",
+
+            faq_a1:
+                "Sim. O gerenciamento do campeonato é realizado diretamente pelo bot dentro do seu servidor do Discord.",
+
+            faq_q2:
+                "O que posso gerenciar?",
+
+            faq_a2:
+                "Você pode organizar equipes, jogadores, partidas, resultados, classificação e estatísticas da competição.",
+
+            faq_q3:
+                "Posso fazer fase de grupos e mata-mata?",
+
+            faq_a3:
+                "O sistema foi pensado para campeonatos com uma estrutura competitiva, incluindo fase de grupos e posteriormente uma fase eliminatória.",
+
+            faq_q4:
+                "Como funciona a licença?",
+
+            faq_a4:
+                "A licença determina o período de acesso ao sistema. Depois da compra, ela poderá ser ativada no seu servidor através do sistema de licenciamento.",
+
+            faq_q5:
+                "Preciso instalar alguma coisa no computador?",
+
+            faq_a5:
+                "Não. O bot funciona no Discord. Depois de adicionar o bot ao servidor e ativar sua licença, o sistema fica disponível para utilização.",
+
+            support_title:
+                "Precisa de ajuda?",
+
+            support_description:
+                "Entre em contato pelo nosso canal de suporte caso tenha alguma dúvida sobre o sistema, licença ou funcionamento do bot.",
+
+            contact:
+                "Entrar em contato",
+
+            cta_title:
+                "Pronto para organizar seu campeonato?",
+
+            cta_description:
+                "Leve a organização do seu Pro Clubs para outro nível.",
+
+            see_licenses:
+                "Ver licenças",
+
+            footer_description:
+                "Sistema de gerenciamento para Pro Clubs"
+
+        },
+
+
+        en: {
+
+            nav_resources: "Features",
+            nav_format: "Format",
+            nav_how: "How it works",
+            nav_plans: "Plans",
+
+            add_bot: "Add Bot",
+            see_plans: "View Plans",
+
+            badge: "⚽ Championship system for Pro Clubs",
+
+            hero_title_1: "Organize.",
+            hero_title_2: "Manage. Compete.",
+
+            hero_description:
+                "Turn your Discord server into a complete hub for Pro Clubs championships. Manage teams, matches, standings and statistics in one system.",
+
+            start_now: "Get Started",
+            learn_system: "Explore the System",
+
+            hero_note:
+                "Built for Pro Clubs championship management.",
+
+            features_title:
+                "Everything for your championship",
+
+            features_description:
+                "Tools to organize and track your championship directly inside Discord.",
+
+            feature_championship:
+                "Championships",
+
+            feature_championship_desc:
+                "Create and manage complete championships directly through your Discord server.",
+
+            feature_teams:
+                "Teams",
+
+            feature_teams_desc:
+                "Organize teams, captains and players in a simple and centralized way.",
+
+            feature_stats:
+                "Statistics",
+
+            feature_stats_desc:
+                "Record goals, assists and track player performance throughout the championship.",
+
+            feature_table:
+                "Standings",
+
+            feature_table_desc:
+                "Automatically track results and team standings in the competition.",
+
+            feature_topscorer:
+                "Top Scorers",
+
+            feature_topscorer_desc:
+                "Check the players with the most goals and follow the top performers.",
+
+            feature_license:
+                "License System",
+
+            feature_license_desc:
+                "Control access to the bot through a dedicated licensing system.",
+
+            format_title:
+                "A real championship",
+
+            format_description:
+                "Structure your competition from the initial stage to the title match.",
+
+            stage_1: "Stage 01",
+            groups: "Group Stage",
+
+            groups_desc:
+                "Teams play their matches and compete for the best positions to advance.",
+
+            groups_1: "✓ Team organization",
+            groups_2: "✓ Result registration",
+            groups_3: "✓ Competition standings",
+            groups_4: "✓ Statistics tracking",
+
+            stage_2: "Stage 02",
+            knockout: "Knockout Stage",
+
+            knockout_desc:
+                "After the group stage comes the knockout phase. Every match can determine the team's future.",
+
+            knockout_1: "✓ Qualified teams",
+            knockout_2: "✓ Knockout matches",
+            knockout_3: "✓ Final stages",
+            knockout_4: "✓ Grand final",
+
+            how_title:
+                "Get started in a few steps",
+
+            how_description:
+                "Get the system on your server and start organizing your championship.",
+
+            step1_title:
+                "Choose your license",
+
+            step1_desc:
+                "Choose the period that best fits your championship.",
+
+            step2_title:
+                "Add the bot",
+
+            step2_desc:
+                "Add the system to your Discord server and activate your license.",
+
+            step3_title:
+                "Organize the competition",
+
+            step3_desc:
+                "Create teams, register matches and follow the entire competition.",
+
+            plans_title:
+                "Choose your license",
+
+            plans_description:
+                "Choose the ideal period for your championship and get access to the system.",
+
+            one_month:
+                "1 Month",
+
+            month_small:
+                "/month",
+
+            one_month_desc:
+                "Access to the system for 30 days.",
+
+            two_months:
+                "2 Months",
+
+            two_months_small:
+                "/2 months",
+
+            two_months_desc:
+                "Access to the system for 60 days.",
+
+            three_months:
+                "3 Months",
+
+            three_months_small:
+                "/3 months",
+
+            three_months_desc:
+                "Access to the system for 90 days.",
+
+            lifetime:
+                "Lifetime",
+
+            lifetime_small:
+                "/one-time",
+
+            lifetime_desc:
+                "Permanent access to the system.",
+
+            plan_feature_1:
+                "Championship management",
+
+            plan_feature_2:
+                "Teams and players",
+
+            plan_feature_3:
+                "Matches and results",
+
+            plan_feature_4:
+                "Statistics",
+
+            buy:
+                "Buy",
+
+            popular:
+                "MOST POPULAR",
+
+            payment_note:
+                "Secure payment through Mercado Pago.",
+
+            faq_title:
+                "Frequently Asked Questions",
+
+            faq_description:
+                "Answers to the most common questions about the system.",
+
+            faq_q1:
+                "Does the bot work inside Discord?",
+
+            faq_a1:
+                "Yes. Championship management is handled directly by the bot inside your Discord server.",
+
+            faq_q2:
+                "What can I manage?",
+
+            faq_a2:
+                "You can organize teams, players, matches, results, standings and competition statistics.",
+
+            faq_q3:
+                "Can I use group stages and knockouts?",
+
+            faq_a3:
+                "Yes. The system is designed for competitive championships with group stages followed by a knockout phase.",
+
+            faq_q4:
+                "How does the license work?",
+
+            faq_a4:
+                "The license determines the access period to the system. After purchasing, it can be activated on your server through the licensing system.",
+
+            faq_q5:
+                "Do I need to install anything on my computer?",
+
+            faq_a5:
+                "No. The bot works inside Discord. After adding the bot to your server and activating your license, the system is ready to use.",
+
+            support_title:
+                "Need help?",
+
+            support_description:
+                "Contact our support channel if you have questions about the system, license or bot.",
+
+            contact:
+                "Contact Support",
+
+            cta_title:
+                "Ready to organize your championship?",
+
+            cta_description:
+                "Take your Pro Clubs organization to the next level.",
+
+            see_licenses:
+                "View Licenses",
+
+            footer_description:
+                "Pro Clubs management system"
+
+        },
+
+
+        es: {
+
+            nav_resources: "Funciones",
+            nav_format: "Formato",
+            nav_how: "Cómo funciona",
+            nav_plans: "Planes",
+
+            add_bot: "Añadir Bot",
+            see_plans: "Ver planes",
+
+            badge: "⚽ Sistema de campeonatos para Pro Clubs",
+
+            hero_title_1: "Organiza.",
+            hero_title_2: "Gestiona. Compite.",
+
+            hero_description:
+                "Convierte tu servidor de Discord en un centro completo para campeonatos de Pro Clubs. Gestiona equipos, partidos, clasificación y estadísticas en un solo sistema.",
+
+            start_now: "Comenzar ahora",
+            learn_system: "Conocer el sistema",
+
+            hero_note:
+                "Desarrollado para la organización de campeonatos de Pro Clubs.",
+
+            features_title:
+                "Todo para tu campeonato",
+
+            features_description:
+                "Herramientas para organizar y seguir tu campeonato directamente dentro de Discord.",
+
+            feature_championship:
+                "Campeonatos",
+
+            feature_championship_desc:
+                "Crea y gestiona campeonatos completos directamente desde tu servidor de Discord.",
+
+            feature_teams:
+                "Equipos",
+
+            feature_teams_desc:
+                "Organiza equipos, capitanes y jugadores de forma sencilla y centralizada.",
+
+            feature_stats:
+                "Estadísticas",
+
+            feature_stats_desc:
+                "Registra goles, asistencias y sigue el rendimiento de los jugadores durante el campeonato.",
+
+            feature_table:
+                "Clasificación",
+
+            feature_table_desc:
+                "Sigue automáticamente los resultados y la situación de los equipos.",
+
+            feature_topscorer:
+                "Máximos goleadores",
+
+            feature_topscorer_desc:
+                "Consulta los jugadores con más goles y sigue a los principales destacados.",
+
+            feature_license:
+                "Sistema de licencias",
+
+            feature_license_desc:
+                "Controla el acceso al bot mediante un sistema de licencias propio.",
+
+            format_title:
+                "Un campeonato de verdad",
+
+            format_description:
+                "Estructura tu competición desde la fase inicial hasta la disputa por el título.",
+
+            stage_1:
+                "Etapa 01",
+
+            groups:
+                "Fase de grupos",
+
+            groups_desc:
+                "Los equipos disputan sus partidos y compiten por las mejores posiciones para avanzar.",
+
+            groups_1: "✓ Organización de equipos",
+            groups_2: "✓ Registro de resultados",
+            groups_3: "✓ Clasificación de la competición",
+            groups_4: "✓ Seguimiento de estadísticas",
+
+            stage_2:
+                "Etapa 02",
+
+            knockout:
+                "Fase eliminatoria",
+
+            knockout_desc:
+                "Después de la clasificación comienza la fase eliminatoria. Cada partido puede decidir el futuro del equipo.",
+
+            knockout_1: "✓ Equipos clasificados",
+            knockout_2: "✓ Partidos eliminatorios",
+            knockout_3: "✓ Fases finales",
+            knockout_4: "✓ Gran final",
+
+            how_title:
+                "Comienza en pocos pasos",
+
+            how_description:
+                "Ten el sistema en tu servidor y comienza a organizar tu campeonato.",
+
+            step1_title:
+                "Elige tu licencia",
+
+            step1_desc:
+                "Elige el período que mejor se adapte a tu campeonato.",
+
+            step2_title:
+                "Añade el bot",
+
+            step2_desc:
+                "Añade el sistema a tu servidor de Discord y activa tu licencia.",
+
+            step3_title:
+                "Organiza la competición",
+
+            step3_desc:
+                "Crea equipos, registra partidos y sigue toda la competición.",
+
+            plans_title:
+                "Elige tu licencia",
+
+            plans_description:
+                "Elige el período ideal para tu campeonato y obtén acceso al sistema.",
+
+            one_month:
+                "1 Mes",
+
+            month_small:
+                "/mes",
+
+            one_month_desc:
+                "Acceso al sistema durante 30 días.",
+
+            two_months:
+                "2 Meses",
+
+            two_months_small:
+                "/2 meses",
+
+            two_months_desc:
+                "Acceso al sistema durante 60 días.",
+
+            three_months:
+                "3 Meses",
+
+            three_months_small:
+                "/3 meses",
+
+            three_months_desc:
+                "Acceso al sistema durante 90 días.",
+
+            lifetime:
+                "De por vida",
+
+            lifetime_small:
+                "/único",
+
+            lifetime_desc:
+                "Acceso permanente al sistema.",
+
+            plan_feature_1:
+                "Gestión del campeonato",
+
+            plan_feature_2:
+                "Equipos y jugadores",
+
+            plan_feature_3:
+                "Partidos y resultados",
+
+            plan_feature_4:
+                "Estadísticas",
+
+            buy:
+                "Comprar",
+
+            popular:
+                "MÁS POPULAR",
+
+            payment_note:
+                "Pago seguro mediante Mercado Pago.",
+
+            faq_title:
+                "Preguntas frecuentes",
+
+            faq_description:
+                "Algunas respuestas a las principales dudas sobre el sistema.",
+
+            faq_q1:
+                "¿El bot funciona dentro de Discord?",
+
+            faq_a1:
+                "Sí. La gestión del campeonato se realiza directamente mediante el bot dentro de tu servidor de Discord.",
+
+            faq_q2:
+                "¿Qué puedo gestionar?",
+
+            faq_a2:
+                "Puedes organizar equipos, jugadores, partidos, resultados, clasificación y estadísticas.",
+
+            faq_q3:
+                "¿Puedo hacer fase de grupos y eliminatorias?",
+
+            faq_a3:
+                "Sí. El sistema está diseñado para campeonatos competitivos con fase de grupos seguida de una fase eliminatoria.",
+
+            faq_q4:
+                "¿Cómo funciona la licencia?",
+
+            faq_a4:
+                "La licencia determina el período de acceso al sistema. Después de la compra, puede activarse en tu servidor mediante el sistema de licencias.",
+
+            faq_q5:
+                "¿Necesito instalar algo en mi ordenador?",
+
+            faq_a5:
+                "No. El bot funciona dentro de Discord. Después de añadir el bot y activar tu licencia, el sistema estará listo para usar.",
+
+            support_title:
+                "¿Necesitas ayuda?",
+
+            support_description:
+                "Contacta con nuestro canal de soporte si tienes alguna duda sobre el sistema, licencia o funcionamiento del bot.",
+
+            contact:
+                "Contactar",
+
+            cta_title:
+                "¿Listo para organizar tu campeonato?",
+
+            cta_description:
+                "Lleva la organización de tu Pro Clubs al siguiente nivel.",
+
+            see_licenses:
+                "Ver licencias",
+
+            footer_description:
+                "Sistema de gestión para Pro Clubs"
+
+        }
+
+    };
+
+
+    /* =========================
+       TROCAR IDIOMA
+    ========================= */
+
+    function changeLanguage(language) {
+
+        const texts =
+            translations[language];
+
+        if (!texts) {
+            return;
+        }
+
+        document
+            .querySelectorAll("[data-i18n]")
+            .forEach(function(element) {
+
+                const key =
+                    element.getAttribute("data-i18n");
+
+                if (texts[key]) {
+
+                    element.textContent =
+                        texts[key];
+
+                }
+
+            });
+
+        if (language === "pt") {
+
+            document.documentElement.lang =
+                "pt-BR";
+
+            document.title =
+                "Pro Clubs Championship | Gestão de Campeonatos";
+
+        }
+
+        if (language === "en") {
+
+            document.documentElement.lang =
+                "en";
+
+            document.title =
+                "Pro Clubs Championship | Championship Management";
+
+        }
+
+        if (language === "es") {
+
+            document.documentElement.lang =
+                "es";
+
+            document.title =
+                "Pro Clubs Championship | Gestión de Campeonatos";
+
+        }
+
+        localStorage.setItem(
+            "siteLanguage",
+            language
+        );
+
+    }
+
+
+    const languageSelect =
+        document.getElementById(
+            "languageSelect"
+        );
+
+
+    languageSelect.addEventListener(
+        "change",
+        function() {
+
+            changeLanguage(
+                this.value
+            );
+
+        }
+    );
+
+
+    /* =========================
+       CARREGAR IDIOMA SALVO
+    ========================= */
+
+    const savedLanguage =
+        localStorage.getItem(
+            "siteLanguage"
+        );
+
+
+    if (
+        savedLanguage &&
+        translations[savedLanguage]
+    ) {
+
+        languageSelect.value =
+            savedLanguage;
+
+        changeLanguage(
+            savedLanguage
+        );
+
+    } else {
+
+        changeLanguage("pt");
+
+    }
+
+</script>
 
 </body>
+
 </html>
